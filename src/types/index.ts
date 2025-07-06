@@ -73,6 +73,21 @@ export interface User {
   createdAt: string;
 }
 
+export interface CartItem {
+  productId: string;
+  name: string;
+  price: number;
+  quantity: number;
+  imageUrl: string;
+}
+
+export interface Cart {
+  id: string;
+  userId: string;
+  items: CartItem[];
+  total: number;
+}
+
 export interface PaginatedResponse<T> {
   data: T[];
   nextCursor?: string;
