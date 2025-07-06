@@ -3,7 +3,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { UserProvider } from '@auth0/nextjs-auth0/client';
+import { Auth0Provider } from '@auth0/nextjs-auth0';
 import { Navbar } from '@/components/navbar';
 
 const inter = Inter({ subsets: ["latin"] });
@@ -15,7 +15,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="zh">
-      <UserProvider>
+      <Auth0Provider>
         <body className={inter.className}>
           <div className="min-h-screen bg-gray-50">
             <Navbar />
@@ -24,7 +24,7 @@ export default function RootLayout({
             </main>
           </div>
         </body>
-      </UserProvider>
+      </Auth0Provider>
     </html>
   );
 }
