@@ -13,3 +13,24 @@ const allProducts: Product[] = Array.from({ length: 20 }, (_, i) => ({
 export async function GET(request: Request) {
   return NextResponse.json({ data: allProducts });
 }
+
+export async function POST(request: Request) {
+  const { name, description, price, imageUrl, stock } = await request.json();
+
+  if (!name || !description || typeof price !== 'number' || !imageUrl || typeof stock !== 'number') {
+    return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
+  }
+
+  const newProduct: Product = {
+    id: `product-${Date.now()}`,
+    name,
+    description,
+    price,
+    imageUrl,
+    stock,
+  };
+
+  allProducts.push(newProduct);
+
+  return NextResponse.json(newProduct, { status: 201 });
+}
