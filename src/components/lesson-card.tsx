@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Lesson } from '@/types';
 import { useUser } from '@auth0/nextjs-auth0/client';
+import { PaymentModal } from './payment-modal';
 
 interface LessonCardProps {
   lesson: Lesson;
@@ -9,6 +10,8 @@ interface LessonCardProps {
 export function LessonCard({ lesson }: LessonCardProps) {
   const { user, isLoading: userLoading } = useUser();
   const [bookingLoading, setBookingLoading] = useState(false);
+  const [showPaymentModal, setShowPaymentModal] = useState(false);
+  const [currentBookingId, setCurrentBookingId] = useState<string | null>(null);
 
   const handleBook = async () => {
     if (!user || userLoading) {
@@ -40,13 +43,19 @@ export function LessonCard({ lesson }: LessonCardProps) {
       }
 
       const booking = await response.json();
-      alert(`预约成功！预约ID: ${booking.id}，状态: ${booking.status}`);
-      // TODO: 刷新课程列表或更新座位数
+      setCurrentBookingId(booking.id);
+      setShowPaymentModal(true); // Show payment modal after successful booking
     } catch (error: any) {
       alert(`预约失败: ${error.message}`);
     } finally {
       setBookingLoading(false);
     }
+  };
+
+  const handlePaymentSuccess = () => {
+    alert('支付成功！');
+    setShowPaymentModal(false);
+    // TODO: Refresh lesson list or update seat count
   };
 
   return (
@@ -63,6 +72,16 @@ export function LessonCard({ lesson }: LessonCardProps) {
       >
         {bookingLoading ? '预约中...' : (lesson.seatsAvailable <= 0 ? '已满' : '预约')}
       </button>
+
+      {showPaymentModal && currentBookingId && (
+        <PaymentModal
+          isOpen={showPaymentModal}
+          onClose={() => setShowPaymentModal(false)}
+          bookingId={currentBookingId}
+          amount={lesson.price}
+          onPaymentSuccess={handlePaymentSuccess}
+        />
+      )}
     </div>
   );
 }
