@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Lesson } from '@/types';
-import { useUser } from '@auth0/nextjs-auth0/client';
+import { useUser } from '@auth0/nextjs-auth0';
 import { PaymentModal } from './payment-modal';
 
 interface LessonCardProps {

@@ -1,6 +1,6 @@
 'use client';
 
-import { useUser } from '@auth0/nextjs-auth0/client';
+import { useUser } from '@auth0/nextjs-auth0';
 import { useStudios } from '@/hooks/use-studios';
 import { StudioCard } from '@/components/studio-card';
 import { useEffect, useRef, useCallback } from 'react';
@@ -46,6 +46,9 @@ export default function Home() {
               </Link>
               <Link href="/community" className="px-4 py-2 bg-teal-600 text-white rounded-md hover:bg-teal-700 transition-colors duration-300">
                 社区
+              </Link>
+              <Link href="/shop" className="px-4 py-2 bg-orange-600 text-white rounded-md hover:bg-orange-700 transition-colors duration-300">
+                商城
               </Link>
             </div>
             <div className="flex justify-center space-x-4 mb-4">
