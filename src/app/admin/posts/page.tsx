@@ -1,7 +1,5 @@
 'use client';
 
-'use client';
-
 import { useState, useEffect } from 'react';
 import { Post } from '@/types';
 
@@ -10,26 +8,53 @@ export default function AdminPostsPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    const fetchPosts = async () => {
-      setLoading(true);
-      setError(null);
-      try {
-        const response = await fetch('/api/v1/posts');
-        if (!response.ok) {
-          throw new Error('Failed to fetch posts');
-        }
-        const data = await response.json();
-        setPosts(data.data);
-      } catch (err: any) {
-        setError(err.message);
-      } finally {
-        setLoading(false);
+  const fetchPosts = async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const response = await fetch('/api/v1/posts');
+      if (!response.ok) {
+        throw new Error('Failed to fetch posts');
       }
-    };
+      const data = await response.json();
+      setPosts(data.data);
+    } catch (err: any) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
 
+  useEffect(() => {
     fetchPosts();
   }, []);
+
+  const handleModerate = async (postId: string, status: 'approved' | 'rejected') => {
+    try {
+      const response = await fetch(`/api/v1/admin/posts/${postId}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ status }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || `Failed to ${status} post`);
+      }
+
+      // Update the post status in the local state
+      setPosts(prevPosts =>
+        prevPosts.map(post =>
+          post.id === postId ? { ...post, status } : post
+        )
+      );
+      alert(`帖子 ${postId} 已${status === 'approved' ? '批准' : '拒绝'}。`);
+    } catch (err: any) {
+      alert(`操作失败: ${err.message}`);
+    }
+  };
 
   if (loading) return <div className="text-center p-8">加载帖子...</div>;
   if (error) return <div className="text-center p-8 text-red-500">错误: {error}</div>;
@@ -47,7 +72,9 @@ export default function AdminPostsPage() {
               <th className="py-3 px-4 text-left">图片</th>
               <th className="py-3 px-4 text-left">点赞</th>
               <th className="py-3 px-4 text-left">评论</th>
+              <th className="py-3 px-4 text-left">状态</th>
               <th className="py-3 px-4 text-left">创建时间</th>
+              <th className="py-3 px-4 text-left">操作</th>
             </tr>
           </thead>
           <tbody className="text-gray-700">
@@ -65,7 +92,33 @@ export default function AdminPostsPage() {
                 </td>
                 <td className="py-3 px-4">{post.likes}</td>
                 <td className="py-3 px-4">{post.comments}</td>
+                <td className="py-3 px-4">
+                  <span className={`px-2 py-1 rounded-full text-xs font-semibold ${post.status === 'approved' ? 'bg-green-100 text-green-800' : post.status === 'rejected' ? 'bg-red-100 text-red-800' : 'bg-yellow-100 text-yellow-800'}`}>
+                    {post.status}
+                  </span>
+                </td>
                 <td className="py-3 px-4">{new Date(post.createdAt).toLocaleString()}</td>
+                <td className="py-3 px-4">
+                  {post.status === 'pending' && (
+                    <div className="flex space-x-2">
+                      <button
+                        onClick={() => handleModerate(post.id, 'approved')}
+                        className="px-3 py-1 bg-green-500 text-white rounded-md text-sm hover:bg-green-600"
+                      >
+                        批准
+                      </button>
+                      <button
+                        onClick={() => handleModerate(post.id, 'rejected')}
+                        className="px-3 py-1 bg-red-500 text-white rounded-md text-sm hover:bg-red-600"
+                      >
+                        拒绝
+                      </button>
+                    </div>
+                  )}
+                  {post.status !== 'pending' && (
+                    <span className="text-gray-500 text-sm">已处理</span>
+                  )}
+                </td>
               </tr>
             ))}
           </tbody>

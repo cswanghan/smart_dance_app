@@ -45,6 +45,7 @@ export interface Post {
   likes: number;
   comments: number;
   createdAt: string;
+  status: "pending" | "approved" | "rejected"; // Added status field
 }
 
 export interface Product {
