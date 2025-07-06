@@ -47,6 +47,32 @@ export interface Post {
   createdAt: string;
 }
 
+export interface Product {
+  id: string;
+  name: string;
+  description: string;
+  price: number;
+  imageUrl: string;
+  stock: number;
+}
+
+export interface Order {
+  id: string;
+  userId: string;
+  userName: string;
+  totalAmount: number;
+  status: "pending" | "paid" | "shipped" | "delivered" | "cancelled";
+  createdAt: string;
+}
+
+export interface User {
+  id: string;
+  name: string;
+  email: string;
+  role: "user" | "admin" | "coach";
+  createdAt: string;
+}
+
 export interface PaginatedResponse<T> {
   data: T[];
   nextCursor?: string;
