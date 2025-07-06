@@ -3,11 +3,10 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { Auth0Provider } from '@auth0/nextjs-auth0';
+import { UserProvider } from '@auth0/nextjs-auth0/client';
+import { Navbar } from '@/components/navbar';
 
 const inter = Inter({ subsets: ["latin"] });
-
-
 
 export default function RootLayout({
   children,
@@ -15,10 +14,17 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <Auth0Provider>
-        <body className={inter.className}>{children}</body>
-      </Auth0Provider>
+    <html lang="zh">
+      <UserProvider>
+        <body className={inter.className}>
+          <div className="min-h-screen bg-gray-50">
+            <Navbar />
+            <main>
+              {children}
+            </main>
+          </div>
+        </body>
+      </UserProvider>
     </html>
   );
 }
