@@ -18,6 +18,14 @@ export interface Lesson {
   price: number;
 }
 
+export interface Booking {
+  id: string;
+  lessonId: string;
+  userId: string;
+  status: "pending" | "paid" | "cancelled";
+  createdAt: string;
+}
+
 export interface PaginatedResponse<T> {
   data: T[];
   nextCursor?: string;
