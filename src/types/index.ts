@@ -26,6 +26,15 @@ export interface Booking {
   createdAt: string;
 }
 
+export interface Record {
+  id: string;
+  userId: string;
+  title: string;
+  videoUrl: string;
+  thumbnailUrl: string;
+  createdAt: string;
+}
+
 export interface PaginatedResponse<T> {
   data: T[];
   nextCursor?: string;

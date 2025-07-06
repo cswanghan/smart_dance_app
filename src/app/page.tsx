@@ -4,6 +4,7 @@ import { useUser } from '@auth0/nextjs-auth0/client';
 import { useStudios } from '@/hooks/use-studios';
 import { StudioCard } from '@/components/studio-card';
 import { useEffect, useRef, useCallback } from 'react';
+import Link from 'next/link';
 
 export default function Home() {
   const { user, error: authError, isLoading: authLoading } = useUser();
@@ -39,9 +40,14 @@ export default function Home() {
           <div className="text-center mb-8">
             <h2 className="text-2xl font-semibold">欢迎, {user.name}!</h2>
             <p className="text-gray-600 mb-4">{user.email}</p>
-            <a href="/api/auth/logout" className="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 transition-colors duration-300">
-              登出
-            </a>
+            <div className="flex justify-center space-x-4 mb-4">
+              <Link href="/profile/records" className="px-4 py-2 bg-purple-600 text-white rounded-md hover:bg-purple-700 transition-colors duration-300">
+                我的训练记录
+              </Link>
+              <a href="/api/auth/logout" className="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 transition-colors duration-300">
+                登出
+              </a>
+            </div>
           </div>
 
           <h2 className="text-3xl font-bold mb-6 text-center">探索门店</h2>
