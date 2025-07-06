@@ -12,7 +12,7 @@
     - [ ] 搭建 CI/CD 基础流水线 `(完成于: YYYY-MM-DD)`
     - [x] 使用 `npx create-next-app` 初始化 Next.js 项目 `(完成于: 2025-07-06)`
 - [ ] **规范确定**
-    - [ ] 根据设计稿（Figma）建立基础 UI 组件库 `(完成于: YYYY-MM-DD)`
+    - [x] 根据设计稿（Figma）建立基础 UI 组件库 `(完成于: 2025-07-06)`
     - [ ] 定义核心 API 接口规范 (Swagger/OpenAPI) `(完成于: YYYY-MM-DD)`
 
 ---
