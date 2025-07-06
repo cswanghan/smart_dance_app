@@ -35,6 +35,18 @@ export interface Record {
   createdAt: string;
 }
 
+export interface Post {
+  id: string;
+  userId: string;
+  userName: string;
+  userAvatar: string;
+  content: string;
+  imageUrl?: string;
+  likes: number;
+  comments: number;
+  createdAt: string;
+}
+
 export interface PaginatedResponse<T> {
   data: T[];
   nextCursor?: string;

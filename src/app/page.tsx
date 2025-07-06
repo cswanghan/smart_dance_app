@@ -44,6 +44,9 @@ export default function Home() {
               <Link href="/profile/records" className="px-4 py-2 bg-purple-600 text-white rounded-md hover:bg-purple-700 transition-colors duration-300">
                 我的训练记录
               </Link>
+              <Link href="/community" className="px-4 py-2 bg-teal-600 text-white rounded-md hover:bg-teal-700 transition-colors duration-300">
+                社区
+              </Link>
               <a href="/api/auth/logout" className="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 transition-colors duration-300">
                 登出
               </a>
