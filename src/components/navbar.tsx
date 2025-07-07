@@ -54,11 +54,20 @@ export function Navbar() {
                   管理后台
                 </Link>
                 <div className="flex items-center space-x-2">
-                  <img
-                    src={user.picture || '/default-avatar.png'}
-                    alt={user.name || '用户'}
-                    className="w-8 h-8 rounded-full"
-                  />
+                  {user.picture ? (
+                    <img
+                      src={user.picture}
+                      alt={user.name || '用户'}
+                      className="w-8 h-8 rounded-full"
+                      onError={(e) => {
+                        e.currentTarget.src = '/default-avatar.png';
+                      }}
+                    />
+                  ) : (
+                    <div className="w-8 h-8 rounded-full bg-purple-600 flex items-center justify-center text-white text-sm font-medium">
+                      {user.name ? user.name.charAt(0).toUpperCase() : 'U'}
+                    </div>
+                  )}
                   <span className="text-sm text-gray-700">{user.name}</span>
                 </div>
                 <a
@@ -145,11 +154,20 @@ export function Navbar() {
                   </Link>
                   <div className="px-3 py-2 border-t">
                     <div className="flex items-center space-x-2 mb-2">
-                      <img
-                        src={user.picture || '/default-avatar.png'}
-                        alt={user.name || '用户'}
-                        className="w-8 h-8 rounded-full"
-                      />
+                      {user.picture ? (
+                        <img
+                          src={user.picture}
+                          alt={user.name || '用户'}
+                          className="w-8 h-8 rounded-full"
+                          onError={(e) => {
+                            e.currentTarget.src = '/default-avatar.png';
+                          }}
+                        />
+                      ) : (
+                        <div className="w-8 h-8 rounded-full bg-purple-600 flex items-center justify-center text-white text-sm font-medium">
+                          {user.name ? user.name.charAt(0).toUpperCase() : 'U'}
+                        </div>
+                      )}
                       <span className="text-sm text-gray-700">{user.name}</span>
                     </div>
                     <a
